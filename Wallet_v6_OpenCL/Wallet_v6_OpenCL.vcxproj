@@ -14,13 +14,13 @@
     <ProjectGuid>{3E70615B-18BA-4F61-8F04-098522640286}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Wallet_v6_OpenCL</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -42,6 +42,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <Linkage-secp256k1>dynamic</Linkage-secp256k1>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -53,12 +54,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(AMDAPPSDKROOT)\include;C:\secp256k1-version4\src;C:\secp256k1-version4\include;C:\boost_1_58_0;C:\Temp\openssl\include;C:\Program Files (x86)\Oracle\Berkeley DB 12cR1 6.0.30\src;C:\Program Files (x86)\Oracle\Berkeley DB 12cR1 6.0.30\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files (x86)\AMD APP\include;C:\secp256k1-vc141-nuget-master\include;C:\secp256k1-vc141-nuget-master\src;C:\boost_1_58_0;C:\OpenSSL_libs\include;C:\Program Files (x86)\Oracle\Berkeley DB 12cR1 6.0.30\src;C:\Program Files (x86)\Oracle\Berkeley DB 12cR1 6.0.30\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(AMDAPPSDKROOT)\lib\x86;C:\secp256k1-version4\bin\Win32\Debug\v120\dynamic;C:\boost_1_58_0\stage\lib;C:\Temp\openssl\lib;C:\Program Files (x86)\Oracle\Berkeley DB 12cR1 6.0.30\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\AMD APP\lib\x86;C:\secp256k1-vc141-nuget-master\bin\Win32\Debug\v141\dynamic;C:\boost_1_58_0\stage_x86\lib;C:\OpenSSL_libs\lib;C:\Program Files (x86)\Oracle\Berkeley DB 12cR1 6.0.30\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libeay32.lib;ssleay32.lib;libdb60.lib;secp256k1.lib;OpenCL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -118,8 +119,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="kernel1.cl" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\secp256k1-vc141.0.1.0.15\build\native\secp256k1-vc141.targets" Condition="Exists('..\packages\secp256k1-vc141.0.1.0.15\build\native\secp256k1-vc141.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\secp256k1-vc141.0.1.0.15\build\native\secp256k1-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\secp256k1-vc141.0.1.0.15\build\native\secp256k1-vc141.targets'))" />
+  </Target>
 </Project>

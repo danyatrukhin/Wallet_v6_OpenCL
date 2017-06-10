@@ -121,5 +121,6 @@
     <None Include="kernel1.cl">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

@@ -583,9 +583,10 @@ bool Unlock(uchar* pass, uchar *pMasterKey_second_vchSalt, uint pMasterKey_secon
 			printf("%d ", chKey[i]);
 		for(i = 0; i < 32; ++i)
 			printf("%d ", chIV[i]);
+		return true;
 		//for(i = 0; i < 48; ++i)
 		//	printf("%d ", vchCryptedKey[i]);
-	
+		
 		//for(i = 0; i < 32; ++i)
 		//	resKey[i] = chKey[i], resIV[i] = chIV[i];
 	
@@ -604,15 +605,15 @@ uint pMasterKey_second_nDeriveIterations, __global uchar *pMasterKey_second_vchC
 	int i, j;
 	tmp = gid;
 	bool flag1, flag2;
-	uchar pass1[PASS_LEN], pass2[PASS_LEN], default_pass[] = "00001";//"0Gz7n";
-	uchar pMasterKey_second_vchSalt[9], vchCryptedKey[49];
+	uchar pass1[PASS_LEN], pass2[PASS_LEN], default_pass[] = "00000";//"0Gz7n";
+	uchar pMasterKey_second_vchSalt[8], vchCryptedKey[48];
 	
 	for (i = 0; i < 8; ++i)
 		pMasterKey_second_vchSalt[i] = pMasterKey_second_vchSalt1[i];
-	pMasterKey_second_vchSalt[8] = '\0';
+	//pMasterKey_second_vchSalt[8] = '\0';
 	for (i = 0; i < 48; ++i)
 		vchCryptedKey[i] = pMasterKey_second_vchCryptedKey[i];
-	vchCryptedKey[48] = '\0';
+	//vchCryptedKey[48] = '\0';
 	
 	for (i = 0; i < PASS_LEN; ++i)
 	{
@@ -632,9 +633,9 @@ uint pMasterKey_second_nDeriveIterations, __global uchar *pMasterKey_second_vchC
 	if (flag1)
 		for(i = 0; i < PASS_LEN; ++i)
 			result[i] = pass1[i];
-	//if (flag2)
-	//	for(i = 0; i < PASS_LEN; ++i)
-	//		result[i] = pass2[i];
+	if (flag2)
+		for(i = 0; i < PASS_LEN; ++i)
+			result[i] = pass2[i];
 		//printf("%s", pass);					
 }
 
